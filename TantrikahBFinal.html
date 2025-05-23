@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tantrikah Boutique - Pedidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Import Google Fonts: Pacifico for headings, Quicksand for body text */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+
+        /* Define CSS variables for consistent color usage */
+        :root {
+            --orange-tantrikah: #FF8C00; /* Vibrant orange */
+            --yellow-tantrikah: #FFD700; /* Bright yellow */
+            --purple-tantrikah: #8A2BE2; /* Amethyst purple */
+            --text-color: #333; /* Dark gray for text */
+            --background-light: #FFF8DC; /* Light cream background */
+            --success-bg: #D4EDDA; /* Light green for success messages */
+            --success-text: #155724; /* Dark green for success text */
+            --success-border: #C3E6CB; /* Green border for success */
+        }
+
+        /* Basic body styling for font, margin, padding, and background */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+        }
+
+        /* Main container for the application content */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            max-width: 800px; /* Maximum width for readability */
+            width: 100%; /* Full width on smaller screens */
+            margin-bottom: 30px;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        /* Header section styling */
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Logo image styling */
+        .logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain; /* Ensure image fits without distortion */
+            margin-bottom: 15px;
+            border-radius: 50%; /* Circular logo */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main heading styling */
+        h1 {
+            font-family: 'Pacifico', cursive; /* Juvenile, expressive font */
+            color: var(--purple-tantrikah);
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px var(--yellow-tantrikah); /* Shadow for pop effect */
+        }
+
+        /* Slogan styling */
+        .slogan {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.3em;
+            color: var(--orange-tantrikah);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Features section styling */
+        .features {
+            background-color: var(--yellow-tantrikah);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); /* Inner shadow */
+        }
+
+        .features h2 {
+            color: var(--purple-tantrikah);
+            font-size: 1.8em;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .features ul {
+            list-style: none; /* Remove default list bullets */
+            padding: 0;
+            text-align: center;
+            display: grid; /* Use CSS Grid for responsive layout */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+            gap: 10px;
+        }
+
+        .features ul li {
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 5px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .features ul li::before {
+            content: '✨'; /* Sparkle icon for list items */
+            margin-right: 8px;
+        }
+
+        /* Form layout using CSS Grid */
+        form {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column by default */
+            gap: 18px; /* Space between form groups */
+        }
+
+        /* Styling for individual form groups */
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block; /* Make labels take full width */
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: var(--purple-tantrikah);
+        }
+
+        /* Styling for all input fields, selects, and textareas */
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea,
+        input[type="file"] { /* Added file input here */
+            width: calc(100% - 20px); /* Adjust width for padding */
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: all 0.3s ease; /* Smooth transition for focus effect */
+        }
+
+        input[type="file"] {
+            padding: 8px 12px; /* Adjust padding for file input */
+        }
+
+        /* Focus state for input fields */
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus,
+        input[type="file"]:focus { /* Added file input here */
+            border-color: var(--orange-tantrikah);
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.2);
+            outline: none; /* Remove default outline */
+        }
+
+        /* Styling for textarea */
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 80px;
+        }
+
+        /* Styling for all buttons */
+        button {
+            background-color: var(--orange-tantrikah);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+            width: 100%; /* Full width button */
+            margin-top: 10px; /* Space above buttons */
+        }
+
+        button:hover {
+            background-color: #FF6F00; /* Darker orange on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        /* Specific styling for the Excel export button */
+        #exportExcelBtn {
+            background-color: #28a745; /* Green color for Excel */
+            margin-top: 20px; /* More space above this button */
+        }
+
+        #exportExcelBtn:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Styling for message display (e.g., success message) */
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none; /* Hidden by default, shown via JavaScript */
+        }
+
+        .message.success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
+        }
+
+        /* Social media section styling */
+        .social-media {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee; /* Separator line */
+        }
+
+        .social-media p { /* Styling for the new phrase */
+            font-size: 1.1em;
+            color: var(--purple-tantrikah);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .social-media a {
+            color: var(--purple-tantrikah);
+            font-size: 2.5em; /* Large icons */
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+            display: inline-block; /* Allows transform on hover */
+        }
+
+        .social-media a:hover {
+            color: var(--orange-tantrikah);
+            transform: scale(1.1); /* Slightly enlarge on hover */
+        }
+
+        /* WhatsApp button specific styling */
+        .whatsapp-button {
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px; /* Pill shape */
+            text-decoration: none;
+            display: inline-flex; /* Allows icon and text alignment */
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .whatsapp-button i {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .whatsapp-button:hover {
+            background-color: #1DA851; /* Darker green on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Image preview styling */
+        .image-preview-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            display: none; /* Hidden by default until an image is selected */
+        }
+
+        /* Responsive adjustments for screens wider than 600px */
+        @media (min-width: 600px) {
+            form {
+                grid-template-columns: 1fr 1fr; /* Two columns for form fields */
+            }
+            .full-width {
+                grid-column: span 2; /* Make elements span both columns */
+            }
+            .features ul {
+                justify-content: center; /* Center list items in grid */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://github.com/Tantrikah/Fin23mayo/blob/main/TANTRIKAH_BLANCO.jpg?raw=true" alt="Tantrikah Boutique Logo" class="logo">
+            <h1>Tantrikah Boutique</h1>
+            <p class="slogan">¡Expresa tu esencia. Prendas que proyectan tu feminidad, personalidad y tu poder interior!</p>
+        </header>
+
+        <section class="features">
+            <h2>✨ Conoce nuestras Prendas ✨</h2>
+            <ul>
+                <li>Vestidos, palazos, blusas, faldas, pantalones y conjuntos</li>
+                <li>¡Muy coloridos!</li>
+                <li>Súper frescos, cómodos y con mucho estilo</li>
+                <li>Unitalla y quedan en todo tipo de cuerpo</li>
+                <li>Tela de algodón brush (¡lávalos en casa sin problema!)</li>
+            </ul>
+        </section>
+
+        <section class="order-form">
+            <h2>Haz tu Pedido</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="fullName">Nombre completo:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="garmentType">Tipo de prenda de interés:</label>
+                    <select id="garmentType" name="garmentType" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Vestido">Vestido</option>
+                        <option value="Palazo">Palazo</option>
+                        <option value="Blusa">Blusa</option>
+                        <option value="Falda">Falda</option>
+                        <option value="Pantalones">Pantalones</option>
+                        <option value="Conjunto">Conjunto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="garmentColor">Color de la prenda:</label>
+                    <input type="text" id="garmentColor" name="garmentColor" placeholder="Ej. Azul, Rosa, Estampado Floral" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Ciudad:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="coloniaAlcaldia">Colonia y Alcaldía de Entrega:</label>
+                    <input type="text" id="coloniaAlcaldia" name="coloniaAlcaldia" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="state">Estado:</label>
+                    <select id="state" name="state" required>
+                        <option value="">Selecciona tu estado</option>
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="Ciudad de México">Ciudad de México</option>
+                        <option value="Coahuila">Coahuila</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Estado de México">Estado de México</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Michoacán">Michoacán</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz">Veracruz</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono (10 dígitos):</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" placeholder="Ej. 5512345678" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="garmentImage">Adjuntar imagen de la prenda (opcional):</label>
+                    <input type="file" id="garmentImage" name="garmentImage" accept="image/*">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" src="#" alt="Vista previa de la prenda">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="comments">Comentarios:</label>
+                    <textarea id="comments" name="comments" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit">Generar Pedido</button>
+                    <button type="button" id="exportExcelBtn">Exportar Pedidos a CSV</button>
+                </div>
+            </form>
+            <div id="orderMessage" class="message"></div>
+        </section>
+    </div>
+
+    <footer class="social-media">
+        <p>Síguenos en nuestras redes:</p>
+        <a href="https://www.facebook.com/TantrikahBoutique" target="_blank" aria-label="Facebook de Tantrikah Boutique">
+            <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://wa.me/525579015071" target="_blank" class="whatsapp-button" aria-label="WhatsApp de Tantrikah Boutique">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get references to DOM elements
+            const orderForm = document.getElementById('orderForm');
+            const orderMessage = document.getElementById('orderMessage');
+            const phoneInput = document.getElementById('phone');
+            const exportExcelBtn = document.getElementById('exportExcelBtn');
+            const logoElement = document.querySelector('.logo');
+            const garmentImageInput = document.getElementById('garmentImage'); // New: Image input
+            const imagePreview = document.getElementById('imagePreview'); // New: Image preview
+
+            // Array to store all submitted orders temporarily
+            let allOrders = [];
+
+            // Set the logo source. The CSS for .logo already handles the sizing (150x150px with object-fit: contain).
+            logoElement.src = "https://github.com/Tantrikah/Fin23mayo/blob/main/TANTRIKAH_BLANCO.jpg?raw=true";
+
+            // Event listener to limit phone input to 10 digits and allow only numbers
+            phoneInput.addEventListener('input', (event) => {
+                event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+            });
+
+            // New: Event listener for image input change
+            garmentImageInput.addEventListener('change', (event) => {
+                const file = event.target.files[0]; // Get the selected file
+
+                if (file) {
+                    const reader = new FileReader(); // Create a FileReader object
+
+                    reader.onload = (e) => {
+                        imagePreview.src = e.target.result; // Set the image source to the data URL
+                        imagePreview.style.display = 'block'; // Make the image preview visible
+                    };
+
+                    reader.readAsDataURL(file); // Read the file as a data URL (Base64)
+                } else {
+                    imagePreview.src = '#'; // Clear the image source
+                    imagePreview.style.display = 'none'; // Hide the image preview
+                }
+            });
+
+            // Event listener for form submission
+            orderForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission (page reload)
+
+                // Collect data from all form fields
+                const orderData = {
+                    fullName: document.getElementById('fullName').value,
+                    garmentType: document.getElementById('garmentType').value,
+                    garmentColor: document.getElementById('garmentColor').value,
+                    city: document.getElementById('city').value,
+                    coloniaAlcaldia: document.getElementById('coloniaAlcaldia').value,
+                    state: document.getElementById('state').value,
+                    phone: document.getElementById('phone').value,
+                    comments: document.getElementById('comments').value,
+                    // Note: The image itself is NOT stored in allOrders for CSV export
+                    // as it would make the CSV file extremely large and impractical.
+                    // The image is handled client-side for preview only.
+                    imageFileName: garmentImageInput.files[0] ? garmentImageInput.files[0].name : 'N/A'
+                };
+
+                // Add the new order to the allOrders array
+                allOrders.push(orderData);
+                console.log('Pedido recibido:', orderData);
+                console.log('Todos los pedidos en sesión:', allOrders);
+
+                // Display success message to the user
+                orderMessage.textContent = '¡Se ha recibido el pedido!';
+                orderMessage.className = 'message success'; // Apply success styling
+                orderMessage.style.display = 'block'; // Make message visible
+
+                // Automatically clear the form and hide the message after 3 seconds
+                setTimeout(() => {
+                    orderForm.reset(); // Clear all form fields
+                    garmentImageInput.value = ''; // Clear the file input
+                    imagePreview.src = '#'; // Clear the image preview source
+                    imagePreview.style.display = 'none'; // Hide the image preview
+                    orderMessage.style.display = 'none'; // Hide the message
+                }, 3000); // 3000 milliseconds = 3 seconds
+            });
+
+            // Event listener for the "Exportar Pedidos a CSV" button
+            exportExcelBtn.addEventListener('click', () => {
+                if (allOrders.length === 0) {
+                    // Use a custom message box instead of alert()
+                    const noOrdersMessage = document.createElement('div');
+                    noOrdersMessage.textContent = 'No hay pedidos para exportar.';
+                    noOrdersMessage.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        padding: 20px;
+                        border-radius: 8px;
+                        border: 1px solid #f5c6cb;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        font-weight: bold;
+                        text-align: center;
+                    `;
+                    document.body.appendChild(noOrdersMessage);
+                    setTimeout(() => {
+                        document.body.removeChild(noOrdersMessage);
+                    }, 3000);
+                    return;
+                }
+
+                // Define the header row for the CSV file
+                const headers = [
+                    "Nombre Completo",
+                    "Tipo de Prenda",
+                    "Color de Prenda",
+                    "Ciudad",
+                    "Colonia y Alcaldía",
+                    "Estado",
+                    "Teléfono",
+                    "Comentarios",
+                    "Nombre de Archivo de Imagen" // Added for image file name
+                ];
+
+                // Map each order object to an array of values, handling commas and quotes for CSV
+                const rows = allOrders.map(order => [
+                    `"${order.fullName.replace(/"/g, '""')}"`, // Double quotes for values containing commas or quotes
+                    `"${order.garmentType.replace(/"/g, '""')}"`,
+                    `"${order.garmentColor.replace(/"/g, '""')}"`,
+                    `"${order.city.replace(/"/g, '""')}"`,
+                    `"${order.coloniaAlcaldia.replace(/"/g, '""')}"`,
+                    `"${order.state.replace(/"/g, '""')}"`,
+                    `"${order.phone.replace(/"/g, '""')}"`,
+                    `"${order.comments.replace(/"/g, '""')}"`,
+                    `"${order.imageFileName.replace(/"/g, '""')}"` // Added for image file name
+                ].join(',')); // Join values with a comma to form a CSV row
+
+                // Combine headers and data rows, each on a new line
+                const csvContent = [headers.join(','), ...rows].join('\n');
+
+                // Create a Blob object from the CSV content with UTF-8 encoding
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+                // Create a temporary anchor element to trigger the download
+                const link = document.createElement('a');
+                if (link.download !== undefined) { // Check if the download attribute is supported by the browser
+                    const url = URL.createObjectURL(blob); // Create a URL for the Blob
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', 'pedidos_tantrikah_boutique.csv'); // Set the download file name
+                    link.style.visibility = 'hidden'; // Hide the link
+                    document.body.appendChild(link); // Append to body to make it clickable
+                    link.click(); // Programmatically click the link to trigger download
+                    document.body.removeChild(link); // Remove the link after download
+                    URL.revokeObjectURL(url); // Release the object URL to free up memory
+                } else {
+                    // Fallback for browsers that don't support the download attribute
+                    const unsupportedMessage = document.createElement('div');
+                    unsupportedMessage.textContent = 'Tu navegador no soporta la descarga directa de archivos. Por favor, copia el texto y pégalo en un archivo de texto.';
+                    unsupportedMessage.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        padding: 20px;
+                        border-radius: 8px;
+                        border: 1px solid #f5c6cb;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 1000;
+                        font-weight: bold;
+                        text-align: center;
+                    `;
+                    document.body.appendChild(unsupportedMessage);
+                    setTimeout(() => {
+                        document.body.removeChild(unsupportedMessage);
+                    }, 5000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
